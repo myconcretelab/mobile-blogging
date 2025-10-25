@@ -1,0 +1,10 @@
+route: /miniwriter
+default_parent: /
+autosave_interval: 8
+markdown_toolbar: false
+allow_images: false
+default_published: false
+conflict_prefix: '(copie)'
+editor_font_size: medium
+theme: auto
+server_preview: false

@@ -1,0 +1,86 @@
+{% extends 'partials/base.html.twig' %}
+
+{% set miniwriter_json = miniwriter|json_encode(constant('JSON_UNESCAPED_UNICODE')) %}
+
+{% block content %}
+<div id="miniwriter-app" class="miniwriter" data-miniwriter="{{ miniwriter_json|e('html_attr') }}">
+    <header class="mw-header">
+        <div class="mw-header-primary">
+            <h1 class="mw-title">MiniWriter</h1>
+            <span class="mw-user">{{ miniwriter.user.name ?: miniwriter.user.username }}</span>
+        </div>
+        <div class="mw-header-actions">
+            <button class="mw-button mw-button-primary" data-action="new">+ Nouveau</button>
+            <button class="mw-button" data-action="sync-all">Tout envoyer maintenant</button>
+            <span class="mw-connection" data-state="connection">&nbsp;</span>
+        </div>
+    </header>
+
+    <main class="mw-main">
+        <section class="mw-list" data-view="list">
+            <ul class="mw-list-items" data-element="items"></ul>
+            <div class="mw-empty" data-element="empty">Aucun contenu pour le moment.</div>
+        </section>
+        <section class="mw-editor" data-view="editor" hidden>
+            <form class="mw-editor-form" data-element="form">
+                <div class="mw-meta">
+                    <label>
+                        <span>Titre</span>
+                        <input type="text" name="title" required>
+                    </label>
+                    <label>
+                        <span>Date</span>
+                        <input type="datetime-local" name="date">
+                    </label>
+                    <label>
+                        <span>Tags</span>
+                        <input type="text" name="tags" placeholder="tag1, tag2">
+                    </label>
+                    <label class="mw-toggle">
+                        <input type="checkbox" name="published">
+                        <span>Publié</span>
+                    </label>
+                    <label>
+                        <span>Parent</span>
+                        <select name="parent_route" data-element="parent"></select>
+                    </label>
+                    <div class="mw-status" data-element="status">&nbsp;</div>
+                </div>
+                <div class="mw-textarea">
+                    <textarea name="content" rows="18" placeholder="Écrivez votre Markdown..." data-element="editor"></textarea>
+                </div>
+                <div class="mw-toolbar" data-element="toolbar" hidden>
+                    <button type="button" data-markdown="# ">#</button>
+                    <button type="button" data-markdown="## ">##</button>
+                    <button type="button" data-markdown="**texte**">B</button>
+                    <button type="button" data-markdown="_italique_">I</button>
+                    <button type="button" data-markdown="`code`">Code</button>
+                    <button type="button" data-markdown="[lien](url)">Lien</button>
+                    <button type="button" data-markdown="![](image.jpg)" data-role="image">Image</button>
+                </div>
+                <div class="mw-actions">
+                    <button type="submit" class="mw-button mw-button-primary">Sauver</button>
+                    <button type="button" class="mw-button" data-action="cancel">Annuler</button>
+                </div>
+            </form>
+            <aside class="mw-history" data-element="history">
+                <div>Dernière sauvegarde locale : <span data-field="local">—</span></div>
+                <div>Dernière sauvegarde serveur : <span data-field="server">—</span></div>
+            </aside>
+        </section>
+    </main>
+
+    <template id="mw-list-item">
+        <li class="mw-list-item">
+            <div class="mw-item-main">
+                <span class="mw-item-title" data-field="title"></span>
+                <span class="mw-item-meta" data-field="meta"></span>
+            </div>
+            <div class="mw-item-actions">
+                <button class="mw-button" data-action="edit">Éditer</button>
+            </div>
+        </li>
+    </template>
+</div>
+<noscript>MiniWriter nécessite un minimum de JavaScript pour la sauvegarde locale.</noscript>
+{% endblock %}
