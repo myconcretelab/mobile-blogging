@@ -1,0 +1,96 @@
+name: MiniWriter
+slug: miniwriter
+type: plugin
+version: 0.1.0
+description: "MiniWriter - éditeur Markdown minimaliste et mobile-first pour Grav"
+icon: pencil-alt
+author:
+  name: MiniWriter
+  email: example@example.com
+  url: https://github.com/example
+homepage: https://github.com/example/miniwriter
+keywords: miniwriter, markdown, blogging, mobile
+license: MIT
+form:
+  validation: loose
+  fields:
+    enabled:
+      type: toggle
+      label: "Plugin activé"
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+    route:
+      type: text
+      label: "Chemin MiniWriter"
+      default: /miniwriter
+      validate:
+        type: string
+    default_parent:
+      type: pages
+      label: "Parent par défaut"
+      show_all: true
+      default: /
+    autosave_interval:
+      type: number
+      label: "Intervalle d'auto-sauvegarde (s)"
+      default: 8
+      validate:
+        min: 3
+        type: int
+    markdown_toolbar:
+      type: toggle
+      label: "Activer la barre de raccourcis Markdown"
+      highlight: 0
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
+    allow_images:
+      type: toggle
+      label: "Autoriser l'insertion d'images"
+      highlight: 0
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
+    default_published:
+      type: toggle
+      label: "Publier les nouveaux éléments par défaut"
+      highlight: 0
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
+    conflict_prefix:
+      type: text
+      label: "Préfixe en cas de duplication"
+      default: '(copie)'
+    editor_font_size:
+      type: select
+      label: "Taille de police de l'éditeur"
+      default: medium
+      options:
+        small: Petite
+        medium: Moyenne
+        large: Grande
+    theme:
+      type: select
+      label: "Thème"
+      default: auto
+      options:
+        auto: Automatique (suit l'OS)
+        light: Clair
+        dark: Sombre
+    server_preview:
+      type: toggle
+      label: "Activer l'aperçu HTML côté serveur"
+      highlight: 0
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
