@@ -115,7 +115,14 @@ class MiniwriterPlugin extends Plugin
         if ($defaultParent) {
             $parent = $pages->find($defaultParent);
             if ($parent) {
-                $collection = $parent->children()->published()->add($parent->children()->unpublished());
+                // Some Grav versions require 2 args for Collection::add().
+                // Avoid calling add() and merge results explicitly to keep compatibility.
+                $published = $parent->children()->published();
+                $unpublished = $parent->children()->unpublished();
+                $collection = array_merge(
+                    iterator_to_array($published),
+                    iterator_to_array($unpublished)
+                );
             }
         }
 
