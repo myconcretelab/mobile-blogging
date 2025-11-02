@@ -238,6 +238,11 @@
         gap: 2rem;
     }
 
+    /* Make the editor span full width when visible */
+    .mw-editor {
+        grid-column: 1 / -1;
+    }
+
     .mw-list {
         position: sticky;
         top: 1rem;

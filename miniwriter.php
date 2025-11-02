@@ -344,6 +344,12 @@ class MiniwriterPlugin extends Plugin
         }
 
         $slug = $pageDir['slug'];
+        // If editing an existing page, keep its current template filename to avoid creating a new file
+        if ($page) {
+            $existingName = $page->name(); // e.g., 'default.md'
+            $existingTemplate = pathinfo($existingName, PATHINFO_FILENAME) ?: $template;
+            $template = $existingTemplate;
+        }
         $filePath = $pageDir['path'] . '/' . $template . '.md';
         $existingHash = is_file($filePath) ? md5_file($filePath) : null;
 

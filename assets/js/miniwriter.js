@@ -26,6 +26,7 @@
         history: root.querySelector('[data-element="history"]'),
         connection: root.querySelector('[data-state="connection"]'),
         syncAll: root.querySelector('[data-action="sync-all"]'),
+        saveButton: root.querySelector('[data-action="save"]'),
         newButton: root.querySelector('[data-action="new"]'),
         cancelButton: root.querySelector('[data-action="cancel"]')
     };
@@ -50,7 +51,22 @@
     elements.editor.addEventListener('blur', saveDraftLocal);
     elements.newButton.addEventListener('click', () => openEditor(createNewDraft()));
     elements.cancelButton.addEventListener('click', () => switchToList());
-    elements.syncAll.addEventListener('click', flushQueue);
+    if (elements.syncAll) {
+        elements.syncAll.addEventListener('click', flushQueue);
+    }
+    if (elements.saveButton) {
+        elements.saveButton.addEventListener('click', () => {
+            // Trigger form submit to save current page
+            if (!elements.form || elements.form.hasAttribute('hidden') || elements.editorSection.hidden) {
+                return;
+            }
+            if (typeof elements.form.requestSubmit === 'function') {
+                elements.form.requestSubmit();
+            } else {
+                elements.form.submit();
+            }
+        });
+    }
     root.addEventListener('click', handleListClicks);
     elements.toolbar.addEventListener('click', onToolbarClick);
 
